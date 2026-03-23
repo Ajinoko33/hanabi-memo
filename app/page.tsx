@@ -4,8 +4,8 @@ import { CardLabel } from '@/constants'
 import { Action } from '@/types'
 import { Col, Divider, Row } from 'antd'
 import { useState } from 'react'
-import { ActionForm } from './_components/ActionForm'
 import { ActionRow } from './_components/ActionRow'
+import { ActionForm } from './_components/form/ActionForm'
 
 const titles = [
   CardLabel[1],
