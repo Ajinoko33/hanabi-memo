@@ -1,16 +1,16 @@
 import { CardLabel, ColorName, ColorStyle } from '@/constants'
-import { CardIndex, Number } from '@/types'
+import {
+  Action,
+  CardIndex,
+  KnowledgeAction,
+  Number,
+  RemovalAction,
+} from '@/types'
 import { InfoCircleOutlined, ToTopOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Radio, Segmented } from 'antd'
 import clsx from 'clsx'
 import { FC, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import {
-  Action,
-  BaseKnowledgeAction,
-  KnowledgeAction,
-  RemovalAction,
-} from '../page'
 
 interface KnowledgeValues {
   targets: Number[]
@@ -32,7 +32,7 @@ interface RemovalValues {
 
 const generateKey = () => String(Math.floor(Math.random() * 100000))
 const createKnowledgeAction = (data: KnowledgeValues): KnowledgeAction => {
-  const base: BaseKnowledgeAction = {
+  const base: Pick<KnowledgeAction, 'key' | 'targets'> = {
     key: generateKey(),
     targets: data.targets,
   }

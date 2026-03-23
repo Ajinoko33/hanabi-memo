@@ -1,6 +1,5 @@
-import { Action, ColorAction, NumberAction, RemovalAction } from '@/app/page'
 import { ColorName, ColorStyle } from '@/constants'
-import { CardIndex } from '@/types'
+import { Action, CardIndex, ColorAction, NumberAction, RemovalAction } from '@/types'
 import { ToTopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'

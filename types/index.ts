@@ -1,3 +1,26 @@
 export type Color = 'red' | 'blue' | 'yellow' | 'green' | 'white'
 export type Number = 1 | 2 | 3 | 4 | 5
 export type CardIndex = 1 | 2 | 3 | 4 | 5
+
+/* ========== Action ========== */
+
+interface BaseAction<TType extends string> {
+  key: string
+  type: TType
+}
+interface TargetedAction<TType extends string> extends BaseAction<TType> {
+  targets: CardIndex[]
+}
+
+export interface ColorAction extends TargetedAction<'color'> {
+  color: Color
+}
+export interface NumberAction extends TargetedAction<'number'> {
+  number: Number
+}
+export interface RemovalAction extends BaseAction<'removal'> {
+  target: CardIndex
+}
+
+export type KnowledgeAction = ColorAction | NumberAction
+export type Action = KnowledgeAction | RemovalAction

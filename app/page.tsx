@@ -1,7 +1,7 @@
 'use client'
 
 import { CardLabel } from '@/constants'
-import { CardIndex, Color, Number } from '@/types'
+import { Action } from '@/types'
 import { Col, Divider, Row } from 'antd'
 import { useState } from 'react'
 import { ActionForm } from './_components/ActionForm'
@@ -14,26 +14,6 @@ const titles = [
   CardLabel[4],
   CardLabel[5],
 ]
-
-export interface BaseKnowledgeAction {
-  key: string
-  targets: CardIndex[]
-}
-export interface ColorAction extends BaseKnowledgeAction {
-  type: 'color'
-  color: Color
-}
-export interface NumberAction extends BaseKnowledgeAction {
-  type: 'number'
-  number: Number
-}
-export interface RemovalAction {
-  key: string
-  type: 'removal'
-  target: CardIndex
-}
-export type KnowledgeAction = ColorAction | NumberAction
-export type Action = KnowledgeAction | RemovalAction
 
 export default function Home() {
   const [actions, setActions] = useState<Action[]>([])
