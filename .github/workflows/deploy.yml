@@ -1,0 +1,64 @@
+# GitHub Pages へデプロイするワークフロー
+name: Deploy to GitHub Pages
+
+on:
+  # Pages 公開ブランチに push されたときに実行
+  push:
+    branches:
+      - deploy
+  # 手動実行も可能
+  workflow_dispatch:
+
+# 実行中のワークフローは常に一つだけとする
+concurrency:
+  group: 'pages'
+  # 新たにトリガーされても、進行中のものはそのまま走りきる
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # GitHub のコードを取得
+      - name: Checkout
+        uses: actions/checkout@v6
+      # Node.js をセットアップ
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      # Pages デプロイのための調整
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # basePath の自動設定
+          # サーバーサイドでの画像最適化を無効化 (https://nextjs.org/docs/api-reference/next/image#unoptimized)
+          static_site_generator: next
+      # 依存関係をインストール
+      - name: Install dependencies
+        run: npm ci
+      # Next.js でビルド
+      - name: Build with Next.js
+        run: npx --no-install next build
+      # 成果物をアーカイブ化 & アップロード (deploy ジョブに渡すため)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./out
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    # 実行には、build job が正常に完了している必要がある
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
