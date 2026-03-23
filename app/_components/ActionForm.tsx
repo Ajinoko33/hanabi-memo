@@ -1,4 +1,4 @@
-import { CardLabel, ColorName, ColorStyle } from '@/constants'
+import { CardLabel, ColorLabel, ColorStyle, NumberLabel } from '@/constants'
 import {
   Action,
   CardIndex,
@@ -204,25 +204,35 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
                     onChange={(e) => field.onChange(e.target.value)}
                   >
                     <div className='flex'>
-                      <Radio.Button value='number-1'>1</Radio.Button>
-                      <Radio.Button value='number-2'>2</Radio.Button>
-                      <Radio.Button value='number-3'>3</Radio.Button>
-                      <Radio.Button value='number-4'>4</Radio.Button>
-                      <Radio.Button value='number-5'>5</Radio.Button>
+                      <Radio.Button value='number-1'>
+                        {NumberLabel[1]}
+                      </Radio.Button>
+                      <Radio.Button value='number-2'>
+                        {NumberLabel[2]}
+                      </Radio.Button>
+                      <Radio.Button value='number-3'>
+                        {NumberLabel[3]}
+                      </Radio.Button>
+                      <Radio.Button value='number-4'>
+                        {NumberLabel[4]}
+                      </Radio.Button>
+                      <Radio.Button value='number-5'>
+                        {NumberLabel[5]}
+                      </Radio.Button>
                     </div>
                     <div className='flex'>
                       <Radio.Button value='color-red'>
                         <div
                           className={clsx('font-semibold', ColorStyle['red'])}
                         >
-                          {ColorName['red']}
+                          {ColorLabel['red']}
                         </div>
                       </Radio.Button>
                       <Radio.Button value='color-blue'>
                         <div
                           className={clsx('font-semibold', ColorStyle['blue'])}
                         >
-                          {ColorName['blue']}
+                          {ColorLabel['blue']}
                         </div>
                       </Radio.Button>
                       <Radio.Button value='color-yellow'>
@@ -232,21 +242,21 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
                             ColorStyle['yellow'],
                           )}
                         >
-                          {ColorName['yellow']}
+                          {ColorLabel['yellow']}
                         </div>
                       </Radio.Button>
                       <Radio.Button value='color-green'>
                         <div
                           className={clsx('font-semibold', ColorStyle['green'])}
                         >
-                          {ColorName['green']}
+                          {ColorLabel['green']}
                         </div>
                       </Radio.Button>
                       <Radio.Button value='color-white'>
                         <div
                           className={clsx('font-semibold', ColorStyle['white'])}
                         >
-                          {ColorName['white']}
+                          {ColorLabel['white']}
                         </div>
                       </Radio.Button>
                     </div>

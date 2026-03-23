@@ -1,4 +1,4 @@
-import { CardIndex, Color } from '@/types'
+import { CardIndex, Color, Number } from '@/types'
 
 /* ========== カード位置 ========== */
 
@@ -12,7 +12,7 @@ export const CardLabel: Record<CardIndex, string> = {
 
 /* ========== 色情報 ========== */
 
-export const ColorName: Record<Color, string> = {
+export const ColorLabel: Record<Color, string> = {
   red: 'あか',
   blue: 'あお',
   yellow: 'きいろ',
@@ -25,4 +25,14 @@ export const ColorStyle: Record<Color, string> = {
   yellow: 'text-yellow-500',
   green: 'text-green-500',
   white: 'text-gray-500',
+}
+
+/* ========== 数字情報 ========== */
+
+export const NumberLabel: Record<Number, string> = {
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
 }

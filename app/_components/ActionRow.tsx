@@ -1,5 +1,11 @@
-import { ColorName, ColorStyle } from '@/constants'
-import { Action, CardIndex, ColorAction, NumberAction, RemovalAction } from '@/types'
+import { ColorLabel, ColorStyle, NumberLabel } from '@/constants'
+import {
+  Action,
+  CardIndex,
+  ColorAction,
+  NumberAction,
+  RemovalAction,
+} from '@/types'
 import { ToTopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'
@@ -18,7 +24,7 @@ type ColPropsArray = [
 const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
   return action.targets.includes(index)
     ? {
-        content: ColorName[action.color],
+        content: ColorLabel[action.color],
         style: {
           textColor: ColorStyle[action.color],
         },
@@ -40,7 +46,7 @@ const createColPropsArrayOnColor = (action: ColorAction): ColPropsArray => {
 const resolveColPropsOnNumber = (index: CardIndex, action: NumberAction) => {
   return action.targets.includes(index)
     ? {
-        content: action.number,
+        content: NumberLabel[action.number],
       }
     : undefined
 }
