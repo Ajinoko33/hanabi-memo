@@ -1,4 +1,16 @@
-import { Color } from '@/types'
+import { CardIndex, Color } from '@/types'
+
+/* ========== カード位置 ========== */
+
+export const CardLabel: Record<CardIndex, string> = {
+  1: '①',
+  2: '②',
+  3: '③',
+  4: '④',
+  5: '⑤',
+}
+
+/* ========== 色情報 ========== */
 
 export const ColorName: Record<Color, string> = {
   red: 'あか',

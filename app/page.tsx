@@ -1,18 +1,19 @@
 'use client'
 
-import { Button, Checkbox, Col, Divider, Radio, Row } from 'antd'
-import { useState } from 'react'
-import { ActionRow } from './_components/ActionRow'
-import {
-  InfoCircleOutlined,
-  InfoCircleTwoTone,
-  ToTopOutlined,
-} from '@ant-design/icons'
+import { CardLabel } from '@/constants'
 import { CardIndex, Color, Number } from '@/types'
-import clsx from 'clsx'
-import { ColorName, ColorStyle } from '@/constants'
+import { Col, Divider, Row } from 'antd'
+import { useState } from 'react'
+import { ActionForm } from './_components/ActionForm'
+import { ActionRow } from './_components/ActionRow'
 
-const titles = ['①', '②', '③', '④', '⑤']
+const titles = [
+  CardLabel[1],
+  CardLabel[2],
+  CardLabel[3],
+  CardLabel[4],
+  CardLabel[5],
+]
 
 export interface ColorAction {
   key: string
@@ -109,90 +110,7 @@ export default function Home() {
 
       <Divider style={{ borderColor: '#ccc' }} />
 
-      <div className='w-full max-w-96 p-2 border flex flex-col items-stretch'>
-        <div className='flex flex-col items-stretch space-y-2'>
-          <div className='border rounded-md px-2 flex items-center space-x-1 self-start'>
-            {/* <InfoCircleOutlined /> */}
-            <InfoCircleTwoTone />
-            <div>情報</div>
-          </div>
-          <div className='flex flex-col space-y-2 items-stretch'>
-            <div className='flex flex-col items-center space-y-2'>
-              <div className=''>
-                <Checkbox.Group options={titles} />
-              </div>
-              <div className='font-bold'>だけ</div>
-              <div className=''>
-                <Radio.Group optionType='default'>
-                  <div className='flex'>
-                    <Radio.Button value='1'>1</Radio.Button>
-                    <Radio.Button value='2'>2</Radio.Button>
-                    <Radio.Button value='3'>3</Radio.Button>
-                    <Radio.Button value='4'>4</Radio.Button>
-                    <Radio.Button value='5'>5</Radio.Button>
-                  </div>
-                  <div className='flex'>
-                    <Radio.Button value='red'>
-                      <div className={clsx('font-semibold', ColorStyle['red'])}>
-                        {ColorName['red']}
-                      </div>
-                    </Radio.Button>
-                    <Radio.Button value='blue'>
-                      <div
-                        className={clsx('font-semibold', ColorStyle['blue'])}
-                      >
-                        {ColorName['blue']}
-                      </div>
-                    </Radio.Button>
-                    <Radio.Button value='yellow'>
-                      <div
-                        className={clsx('font-semibold', ColorStyle['yellow'])}
-                      >
-                        {ColorName['yellow']}
-                      </div>
-                    </Radio.Button>
-                    <Radio.Button value='green'>
-                      <div
-                        className={clsx('font-semibold', ColorStyle['green'])}
-                      >
-                        {ColorName['green']}
-                      </div>
-                    </Radio.Button>
-                    <Radio.Button value='white'>
-                      <div
-                        className={clsx('font-semibold', ColorStyle['white'])}
-                      >
-                        {ColorName['white']}
-                      </div>
-                    </Radio.Button>
-                  </div>
-                </Radio.Group>
-              </div>
-            </div>
-            <div className='self-end'>
-              <Button type='primary'>登録</Button>
-            </div>
-          </div>
-        </div>
-        <Divider style={{ borderColor: '#ccc' }} />
-        <div className='flex flex-col items-stretch space-y-2'>
-          <div className='border rounded-md px-2 flex items-center space-x-1 self-start'>
-            <ToTopOutlined />
-            <div>プレイ・捨てる</div>
-          </div>
-          <div className='flex flex-col space-y-2 items-stretch'>
-            <div className='flex flex-col items-center space-y-2'>
-              <div className=''>
-                <Checkbox.Group options={titles} />
-              </div>
-              <div className='font-bold'>を プレイ・捨てる</div>
-            </div>
-            <div className='self-end'>
-              <Button type='primary'>登録</Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ActionForm />
     </main>
   )
 }

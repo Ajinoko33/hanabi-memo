@@ -1,10 +1,10 @@
 import { Action, ColorAction, NumberAction, RemoveAction } from '@/app/page'
+import { ColorName, ColorStyle } from '@/constants'
+import { CardIndex } from '@/types'
 import { ToTopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'
 import { ActionCol, ActionColProps } from './ActionCol'
-import { CardIndex, Color } from '@/types'
-import { ColorName, ColorStyle } from '@/constants'
 
 type ColPropsArray = [
   ActionColProps | undefined,
