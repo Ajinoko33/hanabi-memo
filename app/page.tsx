@@ -15,69 +15,32 @@ const titles = [
   CardLabel[5],
 ]
 
-export interface ColorAction {
+export interface BaseKnowledgeAction {
   key: string
+  targets: CardIndex[]
+}
+export interface ColorAction extends BaseKnowledgeAction {
   type: 'color'
   color: Color
-  targets: CardIndex[]
 }
-export interface NumberAction {
-  key: string
+export interface NumberAction extends BaseKnowledgeAction {
   type: 'number'
   number: Number
-  targets: CardIndex[]
 }
-export interface RemoveAction {
+export interface RemovalAction {
   key: string
-  type: 'remove'
-  index: CardIndex
+  type: 'removal'
+  target: CardIndex
 }
-export type Action = ColorAction | NumberAction | RemoveAction
+export type KnowledgeAction = ColorAction | NumberAction
+export type Action = KnowledgeAction | RemovalAction
 
 export default function Home() {
-  const [actions, setActions] = useState<Action[]>([
-    {
-      key: '1',
-      type: 'color',
-      color: 'red',
-      targets: [1, 2],
-    },
-    {
-      key: '2',
-      type: 'color',
-      color: 'blue',
-      targets: [1, 2],
-    },
-    {
-      key: '3',
-      type: 'color',
-      color: 'yellow',
-      targets: [1, 2],
-    },
-    {
-      key: '4',
-      type: 'color',
-      color: 'green',
-      targets: [1, 2],
-    },
-    {
-      key: '5',
-      type: 'color',
-      color: 'white',
-      targets: [1, 2],
-    },
-    {
-      key: '6',
-      type: 'number',
-      number: 2,
-      targets: [3, 4],
-    },
-    {
-      key: '7',
-      type: 'remove',
-      index: 5,
-    },
-  ])
+  const [actions, setActions] = useState<Action[]>([])
+
+  const addAction = (action: Action) => {
+    setActions((pre) => [...pre, action])
+  }
 
   return (
     <main className='flex flex-col items-center flex-1 p-4 bg-white'>
@@ -110,7 +73,7 @@ export default function Home() {
 
       <Divider style={{ borderColor: '#ccc' }} />
 
-      <ActionForm />
+      <ActionForm addAction={addAction} />
     </main>
   )
 }
