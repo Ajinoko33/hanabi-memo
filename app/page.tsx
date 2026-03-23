@@ -1,65 +1,198 @@
-import Image from "next/image";
+'use client'
+
+import { Button, Checkbox, Col, Divider, Radio, Row } from 'antd'
+import { useState } from 'react'
+import { ActionRow } from './_components/ActionRow'
+import {
+  InfoCircleOutlined,
+  InfoCircleTwoTone,
+  ToTopOutlined,
+} from '@ant-design/icons'
+import { CardIndex, Color, Number } from '@/types'
+import clsx from 'clsx'
+import { ColorName, ColorStyle } from '@/constants'
+
+const titles = ['①', '②', '③', '④', '⑤']
+
+export interface ColorAction {
+  key: string
+  type: 'color'
+  color: Color
+  targets: CardIndex[]
+}
+export interface NumberAction {
+  key: string
+  type: 'number'
+  number: Number
+  targets: CardIndex[]
+}
+export interface RemoveAction {
+  key: string
+  type: 'remove'
+  index: CardIndex
+}
+export type Action = ColorAction | NumberAction | RemoveAction
 
 export default function Home() {
+  const [actions, setActions] = useState<Action[]>([
+    {
+      key: '1',
+      type: 'color',
+      color: 'red',
+      targets: [1, 2],
+    },
+    {
+      key: '2',
+      type: 'color',
+      color: 'blue',
+      targets: [1, 2],
+    },
+    {
+      key: '3',
+      type: 'color',
+      color: 'yellow',
+      targets: [1, 2],
+    },
+    {
+      key: '4',
+      type: 'color',
+      color: 'green',
+      targets: [1, 2],
+    },
+    {
+      key: '5',
+      type: 'color',
+      color: 'white',
+      targets: [1, 2],
+    },
+    {
+      key: '6',
+      type: 'number',
+      number: 2,
+      targets: [3, 4],
+    },
+    {
+      key: '7',
+      type: 'remove',
+      index: 5,
+    },
+  ])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <main className='flex flex-col items-center flex-1 p-4 bg-white'>
+      <div className='w-96 border-r'>
+        {/* title */}
+        <Row className='w-full'>
+          {titles.map((value) => {
+            return (
+              <Col
+                key={value}
+                flex={1}
+                className='border-t border-b-2 border-l'
+              >
+                <div className='flex justify-center'>{value}</div>
+              </Col>
+            )
+          })}
+        </Row>
+
+        {/* content */}
+        {actions.map((action) => {
+          return (
+            <ActionRow
+              key={action.key}
+              action={action}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          )
+        })}
+      </div>
+
+      <Divider style={{ borderColor: '#ccc' }} />
+
+      <div className='w-full max-w-96 p-2 border flex flex-col items-stretch'>
+        <div className='flex flex-col items-stretch space-y-2'>
+          <div className='border rounded-md px-2 flex items-center space-x-1 self-start'>
+            {/* <InfoCircleOutlined /> */}
+            <InfoCircleTwoTone />
+            <div>情報</div>
+          </div>
+          <div className='flex flex-col space-y-2 items-stretch'>
+            <div className='flex flex-col items-center space-y-2'>
+              <div className=''>
+                <Checkbox.Group options={titles} />
+              </div>
+              <div className='font-bold'>だけ</div>
+              <div className=''>
+                <Radio.Group optionType='default'>
+                  <div className='flex'>
+                    <Radio.Button value='1'>1</Radio.Button>
+                    <Radio.Button value='2'>2</Radio.Button>
+                    <Radio.Button value='3'>3</Radio.Button>
+                    <Radio.Button value='4'>4</Radio.Button>
+                    <Radio.Button value='5'>5</Radio.Button>
+                  </div>
+                  <div className='flex'>
+                    <Radio.Button value='red'>
+                      <div className={clsx('font-semibold', ColorStyle['red'])}>
+                        {ColorName['red']}
+                      </div>
+                    </Radio.Button>
+                    <Radio.Button value='blue'>
+                      <div
+                        className={clsx('font-semibold', ColorStyle['blue'])}
+                      >
+                        {ColorName['blue']}
+                      </div>
+                    </Radio.Button>
+                    <Radio.Button value='yellow'>
+                      <div
+                        className={clsx('font-semibold', ColorStyle['yellow'])}
+                      >
+                        {ColorName['yellow']}
+                      </div>
+                    </Radio.Button>
+                    <Radio.Button value='green'>
+                      <div
+                        className={clsx('font-semibold', ColorStyle['green'])}
+                      >
+                        {ColorName['green']}
+                      </div>
+                    </Radio.Button>
+                    <Radio.Button value='white'>
+                      <div
+                        className={clsx('font-semibold', ColorStyle['white'])}
+                      >
+                        {ColorName['white']}
+                      </div>
+                    </Radio.Button>
+                  </div>
+                </Radio.Group>
+              </div>
+            </div>
+            <div className='self-end'>
+              <Button type='primary'>登録</Button>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
-  );
+        <Divider style={{ borderColor: '#ccc' }} />
+        <div className='flex flex-col items-stretch space-y-2'>
+          <div className='border rounded-md px-2 flex items-center space-x-1 self-start'>
+            <ToTopOutlined />
+            <div>プレイ・捨てる</div>
+          </div>
+          <div className='flex flex-col space-y-2 items-stretch'>
+            <div className='flex flex-col items-center space-y-2'>
+              <div className=''>
+                <Checkbox.Group options={titles} />
+              </div>
+              <div className='font-bold'>を プレイ・捨てる</div>
+            </div>
+            <div className='self-end'>
+              <Button type='primary'>登録</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
 }
