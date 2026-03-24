@@ -1,4 +1,4 @@
-import { CardLabel, ColorLabel, ColorStyle, NumberLabel } from '@/constants'
+import { CARDS, ColorLabel, ColorStyle, NumberLabel } from '@/constants'
 import { CardIndex } from '@/types'
 import { Checkbox, Radio } from 'antd'
 import clsx from 'clsx'
@@ -26,7 +26,7 @@ export const KnowledgeActionFormContent: FC<KnowledgeActionFormContentProps> = (
               value={field.value}
               options={([1, 2, 3, 4, 5] satisfies CardIndex[]).map((value) => ({
                 value,
-                label: CardLabel[value],
+                label: CARDS[value].label,
               }))}
               onChange={(checkedValue) => field.onChange(checkedValue)}
             />

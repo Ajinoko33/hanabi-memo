@@ -1,14 +1,14 @@
 import { CardIndex, Color, Number } from '@/types'
 
-/* ========== カード位置 ========== */
+/* ========== カード ========== */
 
-export const CardLabel: Record<CardIndex, string> = {
-  1: '①',
-  2: '②',
-  3: '③',
-  4: '④',
-  5: '⑤',
-}
+export const CARDS = {
+  1: { label: '①' },
+  2: { label: '②' },
+  3: { label: '③' },
+  4: { label: '④' },
+  5: { label: '⑤' },
+} as const satisfies Record<CardIndex, { label: string }>
 
 /* ========== 色情報 ========== */
 

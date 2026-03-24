@@ -1,19 +1,15 @@
 'use client'
 
-import { CardLabel } from '@/constants'
+import { CARDS } from '@/constants'
 import { Action } from '@/types'
 import { Col, Divider, Row } from 'antd'
 import { useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 
-const titles = [
-  CardLabel[1],
-  CardLabel[2],
-  CardLabel[3],
-  CardLabel[4],
-  CardLabel[5],
-]
+const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
+  (card) => card.label,
+)
 
 export default function Home() {
   const [actions, setActions] = useState<Action[]>([])

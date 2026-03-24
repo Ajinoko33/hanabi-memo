@@ -1,4 +1,4 @@
-import { CardLabel } from '@/constants'
+import { CARDS } from '@/constants'
 import { CardIndex } from '@/types'
 import { Radio } from 'antd'
 import { FC } from 'react'
@@ -27,7 +27,7 @@ export const RemovalActionFormContent: FC<RemovalActionFormContentProps> = (
                 options={([1, 2, 3, 4, 5] satisfies CardIndex[]).map(
                   (value) => ({
                     value,
-                    label: CardLabel[value],
+                    label: CARDS[value].label,
                   }),
                 )}
                 onChange={(e) => field.onChange(e.target.value)}
