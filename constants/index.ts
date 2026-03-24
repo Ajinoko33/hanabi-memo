@@ -1,4 +1,4 @@
-import { CardIndex, Color, Number } from '@/types'
+import type { CardIndex, Color, Number } from '@/types'
 
 /* ========== カード ========== */
 
@@ -9,6 +9,10 @@ export const CARDS = {
   4: { label: '④' },
   5: { label: '⑤' },
 } as const satisfies Record<CardIndex, { label: string }>
+
+export const ALL_CARD_INDEX = Object.keys(CARDS).map(
+  Number,
+) as unknown as CardIndex[]
 
 /* ========== 色 ========== */
 

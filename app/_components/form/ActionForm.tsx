@@ -1,28 +1,49 @@
-import { Action, KnowledgeAction, Number, RemovalAction } from '@/types'
-import { InfoCircleOutlined, ToTopOutlined } from '@ant-design/icons'
+import { useMaskAndReset } from '@/app/_hooks/useMaskAndResetForm'
+import { ALL_CARD_INDEX } from '@/constants'
+import z from '@/lib/zod'
+import { Action, CardIndex, KnowledgeAction, RemovalAction } from '@/types'
+import {
+  CheckCircleFilled,
+  InfoCircleOutlined,
+  ToTopOutlined,
+} from '@ant-design/icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Segmented } from 'antd'
+import clsx from 'clsx'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { KnowledgeActionFormContent } from './KnowledgeActionFormContent'
 import { RemovalActionFormContent } from './RemovalActionFormContent'
 
+const allKnowledgeOptions = [
+  'number-1',
+  'number-2',
+  'number-3',
+  'number-4',
+  'number-5',
+  'color-red',
+  'color-blue',
+  'color-yellow',
+  'color-green',
+  'color-white',
+] as const
+type KnowledgeOption = (typeof allKnowledgeOptions)[number]
+
 export interface KnowledgeValues {
-  targets: Number[]
-  knowledge:
-    | 'number-1'
-    | 'number-2'
-    | 'number-3'
-    | 'number-4'
-    | 'number-5'
-    | 'color-red'
-    | 'color-blue'
-    | 'color-yellow'
-    | 'color-green'
-    | 'color-white'
+  targets: CardIndex[]
+  knowledge: KnowledgeOption
 }
 export interface RemovalValues {
-  target: Number
+  target: CardIndex
 }
+
+const knowledgeSchema = z.object({
+  targets: z.array(z.literal(ALL_CARD_INDEX)).min(1).max(5),
+  knowledge: z.literal(allKnowledgeOptions),
+})
+const removalSchema = z.object({
+  target: z.literal(ALL_CARD_INDEX),
+})
 
 const generateKey = () => String(Math.floor(Math.random() * 100000))
 const createKnowledgeAction = (data: KnowledgeValues): KnowledgeAction => {
@@ -102,6 +123,9 @@ const createRemovalAction = (data: RemovalValues): RemovalAction => {
   }
 }
 
+// 登録ボタン押下後、フォームをマスクする時間(ms)
+const MASK_DURATION = 2000
+
 interface ActionFormProps {
   addAction: (action: Action) => void
 }
@@ -111,33 +135,43 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
   const [selectedSegment, setSelectedSegment] = useState<
     'knowledge' | 'removal'
   >('knowledge')
+  const [isMask, mask] = useMaskAndReset(MASK_DURATION)
 
   // Form State
-  const { handleSubmit: handleSubmitKnowledge, control: knowledgeControl } =
-    useForm<KnowledgeValues>({
-      defaultValues: {
-        knowledge: 'number-1',
-      },
-    })
-  const { handleSubmit: handleSubmitRemoval, control: removalControl } =
-    useForm<RemovalValues>({
-      defaultValues: {
-        target: 1,
-      },
-    })
+  const knowledgeForm = useForm<KnowledgeValues>({
+    defaultValues: {
+      targets: [],
+      knowledge: 'number-1',
+    },
+    resolver: zodResolver(knowledgeSchema),
+  })
+  const removalForm = useForm<RemovalValues>({
+    defaultValues: {
+      target: 1,
+    },
+    resolver: zodResolver(removalSchema),
+  })
 
   const onSubmitKnowledge: SubmitHandler<KnowledgeValues> = (data) => {
     addAction(createKnowledgeAction(data))
+    mask(knowledgeForm.reset)
   }
   const onSubmitRemoval: SubmitHandler<RemovalValues> = (data) => {
     addAction(createRemovalAction(data))
+    mask(removalForm.reset)
   }
 
   const onSubmit =
     (selectedSegment === 'knowledge' &&
-      handleSubmitKnowledge(onSubmitKnowledge)) ||
-    (selectedSegment === 'removal' && handleSubmitRemoval(onSubmitRemoval)) ||
+      knowledgeForm.handleSubmit(onSubmitKnowledge)) ||
+    (selectedSegment === 'removal' &&
+      removalForm.handleSubmit(onSubmitRemoval)) ||
     undefined
+
+  const disableSubmit =
+    (selectedSegment === 'knowledge' && !knowledgeForm.formState.isValid) ||
+    (selectedSegment === 'removal' && !removalForm.formState.isValid) ||
+    false
 
   return (
     <div className='flex flex-col items-stretch space-y-6'>
@@ -161,24 +195,38 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
         />
       </div>
 
-      <form
-        className='flex flex-col space-y-6 items-center'
-        onSubmit={onSubmit}
-      >
-        {selectedSegment === 'knowledge' && (
-          <KnowledgeActionFormContent control={knowledgeControl} />
-        )}
-        {selectedSegment === 'removal' && (
-          <RemovalActionFormContent control={removalControl} />
-        )}
-
-        <Button
-          type='primary'
-          htmlType='submit'
+      <div className='relative'>
+        <form
+          className='flex flex-col space-y-6 items-center'
+          onSubmit={onSubmit}
         >
-          登録
-        </Button>
-      </form>
+          {selectedSegment === 'knowledge' && (
+            <KnowledgeActionFormContent control={knowledgeForm.control} />
+          )}
+          {selectedSegment === 'removal' && (
+            <RemovalActionFormContent control={removalForm.control} />
+          )}
+
+          <Button
+            type='primary'
+            htmlType='submit'
+            disabled={disableSubmit}
+          >
+            登録
+          </Button>
+        </form>
+
+        <div
+          className={clsx(
+            'absolute -inset-x-[5%] -inset-y-[5%] w-[110%] h-[110%] bg-slate-200 flex items-center justify-center rounded-md z-10',
+            `transition-all transition-discrete duration-${MASK_DURATION / 2}`,
+            isMask ? 'visible' : 'invisible',
+            isMask ? 'opacity-50' : 'opacity-0',
+          )}
+        >
+          <CheckCircleFilled style={{ fontSize: '48px' }} />
+        </div>
+      </div>
     </div>
   )
 }
