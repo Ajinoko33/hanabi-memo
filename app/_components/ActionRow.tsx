@@ -1,6 +1,11 @@
-import { Action, ColorAction, NumberAction, RemoveAction } from '@/app/page'
-import { ColorName, ColorStyle } from '@/constants'
-import { CardIndex } from '@/types'
+import { COLORS, NUMBERS } from '@/constants'
+import {
+  Action,
+  CardIndex,
+  ColorAction,
+  NumberAction,
+  RemovalAction,
+} from '@/types'
 import { ToTopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'
@@ -19,9 +24,9 @@ type ColPropsArray = [
 const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
   return action.targets.includes(index)
     ? {
-        content: ColorName[action.color],
+        content: COLORS[action.color].label,
         style: {
-          textColor: ColorStyle[action.color],
+          textColor: COLORS[action.color].style,
         },
       }
     : undefined
@@ -41,7 +46,7 @@ const createColPropsArrayOnColor = (action: ColorAction): ColPropsArray => {
 const resolveColPropsOnNumber = (index: CardIndex, action: NumberAction) => {
   return action.targets.includes(index)
     ? {
-        content: action.number,
+        content: NUMBERS[action.number].label,
       }
     : undefined
 }
@@ -57,20 +62,20 @@ const createColPropsArrayOnNumber = (action: NumberAction): ColPropsArray => {
 
 /* ========== Col Props 生成 (除外の場合) ========== */
 
-const resolveColPropsOnRemove = (index: CardIndex, action: RemoveAction) => {
-  return action.index === index
+const resolveColPropsOnRemoval = (index: CardIndex, action: RemovalAction) => {
+  return action.target === index
     ? {
         content: <ToTopOutlined />,
       }
     : undefined
 }
-const createColPropsArrayOnRemove = (action: RemoveAction): ColPropsArray => {
+const createColPropsArrayOnRemoval = (action: RemovalAction): ColPropsArray => {
   return [
-    resolveColPropsOnRemove(1, action),
-    resolveColPropsOnRemove(2, action),
-    resolveColPropsOnRemove(3, action),
-    resolveColPropsOnRemove(4, action),
-    resolveColPropsOnRemove(5, action),
+    resolveColPropsOnRemoval(1, action),
+    resolveColPropsOnRemoval(2, action),
+    resolveColPropsOnRemoval(3, action),
+    resolveColPropsOnRemoval(4, action),
+    resolveColPropsOnRemoval(5, action),
   ]
 }
 
@@ -82,8 +87,8 @@ const createColPropsArray = (action: Action): ColPropsArray => {
       return createColPropsArrayOnColor(action)
     case 'number':
       return createColPropsArrayOnNumber(action)
-    case 'remove':
-      return createColPropsArrayOnRemove(action)
+    case 'removal':
+      return createColPropsArrayOnRemoval(action)
   }
 }
 
