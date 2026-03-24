@@ -156,6 +156,11 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
       removalForm.handleSubmit(onSubmitRemoval)) ||
     undefined
 
+  const disableSubmit =
+    (selectedSegment === 'knowledge' && !knowledgeForm.formState.isValid) ||
+    (selectedSegment === 'removal' && !removalForm.formState.isValid) ||
+    false
+
   return (
     <div className='flex flex-col items-stretch space-y-6'>
       <div className='self-center'>
@@ -192,6 +197,7 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
         <Button
           type='primary'
           htmlType='submit'
+          disabled={disableSubmit}
         >
           登録
         </Button>
