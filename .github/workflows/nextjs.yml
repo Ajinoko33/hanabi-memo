@@ -1,0 +1,44 @@
+# Next.js でソースコードを build するワークフロー
+name: Build with Next.js
+
+on:
+  # main ブランチに push されたときに実行
+  push:
+    branches:
+      - main
+  # Pull Request 関連のトリガーも設定
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  # 手動実行も可能
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # GitHub のコードを取得
+      - name: Checkout
+        uses: actions/checkout@v6
+      # Node.js をセットアップ
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      # Pages デプロイのための調整
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # basePath の自動設定
+          # サーバーサイドでの画像最適化を無効化 (https://nextjs.org/docs/api-reference/next/image#unoptimized)
+          static_site_generator: next
+      # 依存関係をインストール
+      - name: Install dependencies
+        run: npm ci
+      # Next.js でビルド
+      - name: Build with Next.js
+        run: npx --no-install next build
