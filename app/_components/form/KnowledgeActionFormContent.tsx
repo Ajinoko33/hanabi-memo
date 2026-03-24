@@ -1,4 +1,4 @@
-import { CARDS, COLORS, NumberLabel } from '@/constants'
+import { CARDS, COLORS, NUMBERS } from '@/constants'
 import { CardIndex } from '@/types'
 import { Checkbox, Radio } from 'antd'
 import clsx from 'clsx'
@@ -46,11 +46,11 @@ export const KnowledgeActionFormContent: FC<KnowledgeActionFormContentProps> = (
               onChange={(e) => field.onChange(e.target.value)}
             >
               <div className='flex'>
-                <Radio.Button value='number-1'>{NumberLabel[1]}</Radio.Button>
-                <Radio.Button value='number-2'>{NumberLabel[2]}</Radio.Button>
-                <Radio.Button value='number-3'>{NumberLabel[3]}</Radio.Button>
-                <Radio.Button value='number-4'>{NumberLabel[4]}</Radio.Button>
-                <Radio.Button value='number-5'>{NumberLabel[5]}</Radio.Button>
+                <Radio.Button value='number-1'>{NUMBERS[1].label}</Radio.Button>
+                <Radio.Button value='number-2'>{NUMBERS[2].label}</Radio.Button>
+                <Radio.Button value='number-3'>{NUMBERS[3].label}</Radio.Button>
+                <Radio.Button value='number-4'>{NUMBERS[4].label}</Radio.Button>
+                <Radio.Button value='number-5'>{NUMBERS[5].label}</Radio.Button>
               </div>
               <div className='flex'>
                 <Radio.Button value='color-red'>
