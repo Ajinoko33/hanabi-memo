@@ -1,4 +1,4 @@
-import { CARDS, ColorLabel, ColorStyle, NumberLabel } from '@/constants'
+import { CARDS, COLORS, NumberLabel } from '@/constants'
 import { CardIndex } from '@/types'
 import { Checkbox, Radio } from 'antd'
 import clsx from 'clsx'
@@ -54,28 +54,28 @@ export const KnowledgeActionFormContent: FC<KnowledgeActionFormContentProps> = (
               </div>
               <div className='flex'>
                 <Radio.Button value='color-red'>
-                  <div className={clsx('font-semibold', ColorStyle['red'])}>
-                    {ColorLabel['red']}
+                  <div className={clsx('font-semibold', COLORS.red.style)}>
+                    {COLORS.red.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-blue'>
-                  <div className={clsx('font-semibold', ColorStyle['blue'])}>
-                    {ColorLabel['blue']}
+                  <div className={clsx('font-semibold', COLORS.blue.style)}>
+                    {COLORS.blue.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-yellow'>
-                  <div className={clsx('font-semibold', ColorStyle['yellow'])}>
-                    {ColorLabel['yellow']}
+                  <div className={clsx('font-semibold', COLORS.yellow.style)}>
+                    {COLORS.yellow.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-green'>
-                  <div className={clsx('font-semibold', ColorStyle['green'])}>
-                    {ColorLabel['green']}
+                  <div className={clsx('font-semibold', COLORS.green.style)}>
+                    {COLORS.green.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-white'>
-                  <div className={clsx('font-semibold', ColorStyle['white'])}>
-                    {ColorLabel['white']}
+                  <div className={clsx('font-semibold', COLORS.white.style)}>
+                    {COLORS.white.label}
                   </div>
                 </Radio.Button>
               </div>
