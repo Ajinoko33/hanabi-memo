@@ -1,13 +1,16 @@
-import { Action, KnowledgeAction, Number, RemovalAction } from '@/types'
+import { ALL_CARD_INDEX } from '@/constants'
+import { Action, CardIndex, KnowledgeAction, RemovalAction } from '@/types'
 import { InfoCircleOutlined, ToTopOutlined } from '@ant-design/icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Segmented } from 'antd'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import z from 'zod'
 import { KnowledgeActionFormContent } from './KnowledgeActionFormContent'
 import { RemovalActionFormContent } from './RemovalActionFormContent'
 
 export interface KnowledgeValues {
-  targets: Number[]
+  targets: CardIndex[]
   knowledge:
     | 'number-1'
     | 'number-2'
@@ -21,8 +24,12 @@ export interface KnowledgeValues {
     | 'color-white'
 }
 export interface RemovalValues {
-  target: Number
+  target: CardIndex
 }
+
+const removalSchema = z.object({
+  target: z.literal(ALL_CARD_INDEX, '不正な値です。'),
+})
 
 const generateKey = () => String(Math.floor(Math.random() * 100000))
 const createKnowledgeAction = (data: KnowledgeValues): KnowledgeAction => {
@@ -119,12 +126,12 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
         knowledge: 'number-1',
       },
     })
-  const { handleSubmit: handleSubmitRemoval, control: removalControl } =
-    useForm<RemovalValues>({
-      defaultValues: {
-        target: 1,
-      },
-    })
+  const removalForm = useForm<RemovalValues>({
+    defaultValues: {
+      target: 1,
+    },
+    resolver: zodResolver(removalSchema),
+  })
 
   const onSubmitKnowledge: SubmitHandler<KnowledgeValues> = (data) => {
     addAction(createKnowledgeAction(data))
@@ -136,7 +143,8 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
   const onSubmit =
     (selectedSegment === 'knowledge' &&
       handleSubmitKnowledge(onSubmitKnowledge)) ||
-    (selectedSegment === 'removal' && handleSubmitRemoval(onSubmitRemoval)) ||
+    (selectedSegment === 'removal' &&
+      removalForm.handleSubmit(onSubmitRemoval)) ||
     undefined
 
   return (
@@ -169,7 +177,7 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
           <KnowledgeActionFormContent control={knowledgeControl} />
         )}
         {selectedSegment === 'removal' && (
-          <RemovalActionFormContent control={removalControl} />
+          <RemovalActionFormContent control={removalForm.control} />
         )}
 
         <Button

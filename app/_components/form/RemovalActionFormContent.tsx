@@ -4,6 +4,7 @@ import { Radio } from 'antd'
 import { FC } from 'react'
 import { Control, Controller } from 'react-hook-form'
 import { RemovalValues } from './ActionForm'
+import { ErrorMessage } from './ErrorMessage'
 
 interface RemovalActionFormContentProps {
   control: Control<RemovalValues>
@@ -20,18 +21,23 @@ export const RemovalActionFormContent: FC<RemovalActionFormContentProps> = (
         <Controller
           control={control}
           name='target'
-          render={({ field }) => {
+          render={({ field, fieldState }) => {
             return (
-              <Radio.Group
-                value={field.value}
-                options={([1, 2, 3, 4, 5] satisfies CardIndex[]).map(
-                  (value) => ({
-                    value,
-                    label: CARDS[value].label,
-                  }),
+              <>
+                <Radio.Group
+                  value={field.value}
+                  options={([1, 2, 3, 4, 5] satisfies CardIndex[]).map(
+                    (value) => ({
+                      value,
+                      label: CARDS[value].label,
+                    }),
+                  )}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+                {fieldState.error?.message && (
+                  <ErrorMessage message={fieldState.error.message} />
                 )}
-                onChange={(e) => field.onChange(e.target.value)}
-              />
+              </>
             )
           }}
         />
