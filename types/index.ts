@@ -8,14 +8,14 @@ interface BaseAction<TType extends string> {
   key: string
   type: TType
 }
-interface TargetedAction<TType extends string> extends BaseAction<TType> {
+interface BaseKnowledgeAction<TType extends string> extends BaseAction<TType> {
   targets: CardIndex[]
 }
 
-export interface ColorAction extends TargetedAction<'color'> {
+export interface ColorAction extends BaseKnowledgeAction<'color'> {
   color: Color
 }
-export interface NumberAction extends TargetedAction<'number'> {
+export interface NumberAction extends BaseKnowledgeAction<'number'> {
   number: Number
 }
 export interface RemovalAction extends BaseAction<'removal'> {
