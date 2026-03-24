@@ -1,4 +1,4 @@
-import { CardLabel, ColorLabel, ColorStyle, NumberLabel } from '@/constants'
+import { CARDS, COLORS, NUMBERS } from '@/constants'
 import { CardIndex } from '@/types'
 import { Checkbox, Radio } from 'antd'
 import clsx from 'clsx'
@@ -26,7 +26,7 @@ export const KnowledgeActionFormContent: FC<KnowledgeActionFormContentProps> = (
               value={field.value}
               options={([1, 2, 3, 4, 5] satisfies CardIndex[]).map((value) => ({
                 value,
-                label: CardLabel[value],
+                label: CARDS[value].label,
               }))}
               onChange={(checkedValue) => field.onChange(checkedValue)}
             />
@@ -46,36 +46,36 @@ export const KnowledgeActionFormContent: FC<KnowledgeActionFormContentProps> = (
               onChange={(e) => field.onChange(e.target.value)}
             >
               <div className='flex'>
-                <Radio.Button value='number-1'>{NumberLabel[1]}</Radio.Button>
-                <Radio.Button value='number-2'>{NumberLabel[2]}</Radio.Button>
-                <Radio.Button value='number-3'>{NumberLabel[3]}</Radio.Button>
-                <Radio.Button value='number-4'>{NumberLabel[4]}</Radio.Button>
-                <Radio.Button value='number-5'>{NumberLabel[5]}</Radio.Button>
+                <Radio.Button value='number-1'>{NUMBERS[1].label}</Radio.Button>
+                <Radio.Button value='number-2'>{NUMBERS[2].label}</Radio.Button>
+                <Radio.Button value='number-3'>{NUMBERS[3].label}</Radio.Button>
+                <Radio.Button value='number-4'>{NUMBERS[4].label}</Radio.Button>
+                <Radio.Button value='number-5'>{NUMBERS[5].label}</Radio.Button>
               </div>
               <div className='flex'>
                 <Radio.Button value='color-red'>
-                  <div className={clsx('font-semibold', ColorStyle['red'])}>
-                    {ColorLabel['red']}
+                  <div className={clsx('font-semibold', COLORS.red.style)}>
+                    {COLORS.red.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-blue'>
-                  <div className={clsx('font-semibold', ColorStyle['blue'])}>
-                    {ColorLabel['blue']}
+                  <div className={clsx('font-semibold', COLORS.blue.style)}>
+                    {COLORS.blue.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-yellow'>
-                  <div className={clsx('font-semibold', ColorStyle['yellow'])}>
-                    {ColorLabel['yellow']}
+                  <div className={clsx('font-semibold', COLORS.yellow.style)}>
+                    {COLORS.yellow.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-green'>
-                  <div className={clsx('font-semibold', ColorStyle['green'])}>
-                    {ColorLabel['green']}
+                  <div className={clsx('font-semibold', COLORS.green.style)}>
+                    {COLORS.green.label}
                   </div>
                 </Radio.Button>
                 <Radio.Button value='color-white'>
-                  <div className={clsx('font-semibold', ColorStyle['white'])}>
-                    {ColorLabel['white']}
+                  <div className={clsx('font-semibold', COLORS.white.style)}>
+                    {COLORS.white.label}
                   </div>
                 </Radio.Button>
               </div>

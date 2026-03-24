@@ -1,38 +1,31 @@
 import { CardIndex, Color, Number } from '@/types'
 
-/* ========== カード位置 ========== */
+/* ========== カード ========== */
 
-export const CardLabel: Record<CardIndex, string> = {
-  1: '①',
-  2: '②',
-  3: '③',
-  4: '④',
-  5: '⑤',
-}
+export const CARDS = {
+  1: { label: '①' },
+  2: { label: '②' },
+  3: { label: '③' },
+  4: { label: '④' },
+  5: { label: '⑤' },
+} as const satisfies Record<CardIndex, { label: string }>
 
-/* ========== 色情報 ========== */
+/* ========== 色 ========== */
 
-export const ColorLabel: Record<Color, string> = {
-  red: 'あか',
-  blue: 'あお',
-  yellow: 'きいろ',
-  green: 'みどり',
-  white: 'しろ',
-}
-export const ColorStyle: Record<Color, string> = {
-  red: 'text-red-500',
-  blue: 'text-blue-500',
-  yellow: 'text-yellow-500',
-  green: 'text-green-500',
-  white: 'text-gray-500',
-}
+export const COLORS = {
+  red: { label: 'あか', style: 'text-red-500' },
+  blue: { label: 'あお', style: 'text-blue-500' },
+  yellow: { label: 'きいろ', style: 'text-yellow-500' },
+  green: { label: 'みどり', style: 'text-green-500' },
+  white: { label: 'しろ', style: 'text-gray-500' },
+} as const satisfies Record<Color, { label: string; style: string }>
 
-/* ========== 数字情報 ========== */
+/* ========== 数字 ========== */
 
-export const NumberLabel: Record<Number, string> = {
-  1: '1',
-  2: '2',
-  3: '3',
-  4: '4',
-  5: '5',
-}
+export const NUMBERS = {
+  1: { label: '1' },
+  2: { label: '2' },
+  3: { label: '3' },
+  4: { label: '4' },
+  5: { label: '5' },
+} as const satisfies Record<Number, { label: string }>

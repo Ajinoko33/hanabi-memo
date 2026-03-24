@@ -1,4 +1,4 @@
-import { ColorLabel, ColorStyle, NumberLabel } from '@/constants'
+import { COLORS, NUMBERS } from '@/constants'
 import {
   Action,
   CardIndex,
@@ -24,9 +24,9 @@ type ColPropsArray = [
 const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
   return action.targets.includes(index)
     ? {
-        content: ColorLabel[action.color],
+        content: COLORS[action.color].label,
         style: {
-          textColor: ColorStyle[action.color],
+          textColor: COLORS[action.color].style,
         },
       }
     : undefined
@@ -46,7 +46,7 @@ const createColPropsArrayOnColor = (action: ColorAction): ColPropsArray => {
 const resolveColPropsOnNumber = (index: CardIndex, action: NumberAction) => {
   return action.targets.includes(index)
     ? {
-        content: NumberLabel[action.number],
+        content: NUMBERS[action.number].label,
       }
     : undefined
 }
