@@ -9,7 +9,6 @@ import {
 } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Segmented } from 'antd'
-import clsx from 'clsx'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { KnowledgeActionFormContent } from './KnowledgeActionFormContent'
@@ -124,6 +123,7 @@ const createRemovalAction = (data: RemovalValues): RemovalAction => {
 }
 
 // 登録ボタン押下後、フォームをマスクする時間(ms)
+// globals.css の --animate-fade-in-out の秒数と揃える
 const MASK_DURATION = 2000
 
 interface ActionFormProps {
@@ -216,16 +216,11 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
           </Button>
         </form>
 
-        <div
-          className={clsx(
-            'absolute -inset-x-[5%] -inset-y-[5%] w-[110%] h-[110%] bg-slate-200 flex items-center justify-center rounded-md z-10',
-            `transition-all transition-discrete duration-${MASK_DURATION / 2}`,
-            isMask ? 'visible' : 'invisible',
-            isMask ? 'opacity-50' : 'opacity-0',
-          )}
-        >
-          <CheckCircleFilled style={{ fontSize: '48px' }} />
-        </div>
+        {isMask && (
+          <div className='absolute -inset-x-[5%] -inset-y-[5%] w-[110%] h-[110%] bg-slate-200 flex items-center justify-center rounded-md z-10 animate-fade-in-out'>
+            <CheckCircleFilled style={{ fontSize: '48px', color: 'green' }} />
+          </div>
+        )}
       </div>
     </div>
   )
