@@ -1,9 +1,9 @@
 'use client'
 
 import { CARDS } from '@/constants'
+import { useLocalStorageSyncState } from '@/hooks/useLocalStorageSyncState'
 import { Action } from '@/types'
 import { Col, Divider, Row } from 'antd'
-import { useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 
@@ -12,7 +12,10 @@ const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
 )
 
 export default function Home() {
-  const [actions, setActions] = useState<Action[]>([])
+  const [actions, setActions] = useLocalStorageSyncState<Action[]>(
+    'input-logs',
+    [],
+  )
 
   const addAction = (action: Action) => {
     setActions((pre) => [...pre, action])

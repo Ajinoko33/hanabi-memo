@@ -24,3 +24,7 @@ export interface RemovalAction extends BaseAction<'removal'> {
 
 export type KnowledgeAction = ColorAction | NumberAction
 export type Action = KnowledgeAction | RemovalAction
+
+/* ========== Local Storage Key ========== */
+
+export type LocalStorageKey = 'input-logs'
