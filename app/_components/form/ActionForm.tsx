@@ -1,12 +1,7 @@
-import { useMaskAndReset } from '@/app/_hooks/useMaskAndResetForm'
 import { ALL_CARD_INDEX } from '@/constants'
 import z from '@/lib/zod'
 import { Action, CardIndex, KnowledgeAction, RemovalAction } from '@/types'
-import {
-  CheckCircleFilled,
-  InfoCircleOutlined,
-  ToTopOutlined,
-} from '@ant-design/icons'
+import { InfoCircleOutlined, ToTopOutlined } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Segmented } from 'antd'
 import { FC, useState } from 'react'
@@ -122,10 +117,6 @@ const createRemovalAction = (data: RemovalValues): RemovalAction => {
   }
 }
 
-// 登録ボタン押下後、フォームをマスクする時間(ms)
-// globals.css の --animate-fade-in-out の秒数と揃える
-const MASK_DURATION = 2000
-
 interface ActionFormProps {
   addAction: (action: Action) => void
 }
@@ -135,7 +126,6 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
   const [selectedSegment, setSelectedSegment] = useState<
     'knowledge' | 'removal'
   >('knowledge')
-  const [isMask, mask] = useMaskAndReset(MASK_DURATION)
 
   // Form State
   const knowledgeForm = useForm<KnowledgeValues>({
@@ -154,11 +144,11 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
 
   const onSubmitKnowledge: SubmitHandler<KnowledgeValues> = (data) => {
     addAction(createKnowledgeAction(data))
-    mask(knowledgeForm.reset)
+    knowledgeForm.reset()
   }
   const onSubmitRemoval: SubmitHandler<RemovalValues> = (data) => {
     addAction(createRemovalAction(data))
-    mask(removalForm.reset)
+    removalForm.reset()
   }
 
   const onSubmit =
@@ -215,12 +205,6 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
             登録
           </Button>
         </form>
-
-        {isMask && (
-          <div className='absolute -inset-x-[5%] -inset-y-[5%] w-[110%] h-[110%] bg-slate-200 flex items-center justify-center rounded-md z-10 animate-fade-in-out'>
-            <CheckCircleFilled style={{ fontSize: '48px', color: 'green' }} />
-          </div>
-        )}
       </div>
     </div>
   )
