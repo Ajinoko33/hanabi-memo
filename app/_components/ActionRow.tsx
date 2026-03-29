@@ -6,7 +6,7 @@ import {
   NumberAction,
   RemovalAction,
 } from '@/types'
-import { ToTopOutlined } from '@ant-design/icons'
+import { StopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'
 import { ActionCol, ActionColProps } from './ActionCol'
@@ -65,7 +65,7 @@ const createColPropsArrayOnNumber = (action: NumberAction): ColPropsArray => {
 const resolveColPropsOnRemoval = (index: CardIndex, action: RemovalAction) => {
   return action.target === index
     ? {
-        content: <ToTopOutlined />,
+        content: <StopOutlined />,
       }
     : undefined
 }
