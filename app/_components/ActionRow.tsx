@@ -12,15 +12,10 @@ import { Row } from 'antd'
 import { FC } from 'react'
 import { ActionCol, ActionColProps } from './ActionCol'
 
-type ColPropsArray = [
-  ActionColProps | undefined,
-  ActionColProps | undefined,
-  ActionColProps | undefined,
-  ActionColProps | undefined,
-  ActionColProps | undefined,
-]
+type ColProps = ActionColProps | undefined
+type ColPropsArray = ColProps[]
 
-/* ========== Col Props 生成 (色情報の場合) ========== */
+/* ========== Col Props 生成 ========== */
 
 const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
   return action.targets.includes(index)
@@ -32,17 +27,6 @@ const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
       }
     : undefined
 }
-const createColPropsArrayOnColor = (action: ColorAction): ColPropsArray => {
-  return [
-    resolveColPropsOnColor(1, action),
-    resolveColPropsOnColor(2, action),
-    resolveColPropsOnColor(3, action),
-    resolveColPropsOnColor(4, action),
-    resolveColPropsOnColor(5, action),
-  ]
-}
-
-/* ========== Col Props 生成 (数字情報の場合) ========== */
 
 const resolveColPropsOnNumber = (index: CardIndex, action: NumberAction) => {
   return action.targets.includes(index)
@@ -51,17 +35,6 @@ const resolveColPropsOnNumber = (index: CardIndex, action: NumberAction) => {
       }
     : undefined
 }
-const createColPropsArrayOnNumber = (action: NumberAction): ColPropsArray => {
-  return [
-    resolveColPropsOnNumber(1, action),
-    resolveColPropsOnNumber(2, action),
-    resolveColPropsOnNumber(3, action),
-    resolveColPropsOnNumber(4, action),
-    resolveColPropsOnNumber(5, action),
-  ]
-}
-
-/* ========== Col Props 生成 (プレイの場合) ========== */
 
 const resolveColPropsOnPlay = (index: CardIndex, action: PlayAction) => {
   return action.target === index
@@ -70,17 +43,6 @@ const resolveColPropsOnPlay = (index: CardIndex, action: PlayAction) => {
       }
     : undefined
 }
-const createColPropsArrayOnPlay = (action: PlayAction): ColPropsArray => {
-  return [
-    resolveColPropsOnPlay(1, action),
-    resolveColPropsOnPlay(2, action),
-    resolveColPropsOnPlay(3, action),
-    resolveColPropsOnPlay(4, action),
-    resolveColPropsOnPlay(5, action),
-  ]
-}
-
-/* ========== Col Props 生成 (捨てるの場合) ========== */
 
 const resolveColPropsOnRemoval = (index: CardIndex, action: RemovalAction) => {
   return action.target === index
@@ -89,41 +51,66 @@ const resolveColPropsOnRemoval = (index: CardIndex, action: RemovalAction) => {
       }
     : undefined
 }
-const createColPropsArrayOnRemoval = (action: RemovalAction): ColPropsArray => {
-  return [
-    resolveColPropsOnRemoval(1, action),
-    resolveColPropsOnRemoval(2, action),
-    resolveColPropsOnRemoval(3, action),
-    resolveColPropsOnRemoval(4, action),
-    resolveColPropsOnRemoval(5, action),
-  ]
-}
 
 /* ========== 補助部品 ========== */
 
-const createColPropsArray = (action: Action): ColPropsArray => {
+const createBaseColProps = (action: Action, index: CardIndex): ColProps => {
   switch (action.type) {
     case 'color':
-      return createColPropsArrayOnColor(action)
+      return resolveColPropsOnColor(index, action)
     case 'number':
-      return createColPropsArrayOnNumber(action)
+      return resolveColPropsOnNumber(index, action)
     case 'play':
-      return createColPropsArrayOnPlay(action)
+      return resolveColPropsOnPlay(index, action)
     case 'removal':
-      return createColPropsArrayOnRemoval(action)
+      return resolveColPropsOnRemoval(index, action)
   }
+}
+
+const createColProps = (
+  action: Action,
+  index: CardIndex,
+  isStale: (key: string, target: CardIndex) => boolean,
+): ColProps => {
+  const base = createBaseColProps(action, index)
+
+  if (!isStale(action.key, index)) {
+    return base
+  }
+
+  return {
+    ...base,
+    style: {
+      ...base?.style,
+      backgroundColor: 'bg-gray-300',
+    },
+  }
+}
+
+const createColPropsArray = (
+  action: Action,
+  isStale: (key: string, target: CardIndex) => boolean,
+): ColPropsArray => {
+  return [
+    createColProps(action, 1, isStale),
+    createColProps(action, 2, isStale),
+    createColProps(action, 3, isStale),
+    createColProps(action, 4, isStale),
+    createColProps(action, 5, isStale),
+  ]
 }
 
 /* ========== コンポーネント ========== */
 
 interface ActionRowProps {
   action: Action
+  isStale: (key: string, target: CardIndex) => boolean
 }
 
 export const ActionRow: FC<ActionRowProps> = (props) => {
-  const { action } = props
+  const { action, isStale } = props
 
-  const colPropsArray = createColPropsArray(action)
+  const colPropsArray = createColPropsArray(action, isStale)
 
   return (
     <Row className='w-full'>
