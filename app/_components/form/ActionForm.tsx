@@ -1,9 +1,14 @@
 import { Action } from '@/types'
-import { InfoCircleOutlined, StopOutlined } from '@ant-design/icons'
+import {
+  CheckCircleOutlined,
+  InfoCircleOutlined,
+  StopOutlined,
+} from '@ant-design/icons'
 import { Segmented } from 'antd'
 import { FC, useState } from 'react'
-import { KnowledgeActionForm } from './KnowledgeActionFormContent'
-import { RemovalActionForm } from './RemovalActionFormContent'
+import { KnowledgeActionForm } from './KnowledgeActionForm'
+import { PlayActionForm } from './PlayActionForm'
+import { RemovalActionForm } from './RemovalActionForm'
 
 interface ActionFormProps {
   addAction: (action: Action) => void
@@ -12,7 +17,7 @@ interface ActionFormProps {
 export const ActionForm: FC<ActionFormProps> = (props) => {
   const { addAction } = props
   const [selectedSegment, setSelectedSegment] = useState<
-    'knowledge' | 'removal'
+    'knowledge' | 'play' | 'removal'
   >('knowledge')
 
   return (
@@ -26,7 +31,12 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
               icon: <InfoCircleOutlined />,
             },
             {
-              label: 'プレイ・捨てる',
+              label: 'プレイ',
+              value: 'play',
+              icon: <CheckCircleOutlined />,
+            },
+            {
+              label: '捨てる',
               value: 'removal',
               icon: <StopOutlined />,
             },
@@ -40,6 +50,7 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
       {selectedSegment === 'knowledge' && (
         <KnowledgeActionForm addAction={addAction} />
       )}
+      {selectedSegment === 'play' && <PlayActionForm addAction={addAction} />}
       {selectedSegment === 'removal' && (
         <RemovalActionForm addAction={addAction} />
       )}

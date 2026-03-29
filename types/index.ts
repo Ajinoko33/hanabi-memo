@@ -18,12 +18,15 @@ export interface ColorAction extends BaseKnowledgeAction<'color'> {
 export interface NumberAction extends BaseKnowledgeAction<'number'> {
   number: Number
 }
+export interface PlayAction extends BaseAction<'play'> {
+  target: CardIndex
+}
 export interface RemovalAction extends BaseAction<'removal'> {
   target: CardIndex
 }
 
 export type KnowledgeAction = ColorAction | NumberAction
-export type Action = KnowledgeAction | RemovalAction
+export type Action = KnowledgeAction | PlayAction | RemovalAction
 
 /* ========== Local Storage Key ========== */
 

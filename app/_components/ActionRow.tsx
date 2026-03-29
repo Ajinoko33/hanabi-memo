@@ -4,9 +4,10 @@ import {
   CardIndex,
   ColorAction,
   NumberAction,
+  PlayAction,
   RemovalAction,
 } from '@/types'
-import { StopOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, StopOutlined } from '@ant-design/icons'
 import { Row } from 'antd'
 import { FC } from 'react'
 import { ActionCol, ActionColProps } from './ActionCol'
@@ -60,7 +61,26 @@ const createColPropsArrayOnNumber = (action: NumberAction): ColPropsArray => {
   ]
 }
 
-/* ========== Col Props 生成 (除外の場合) ========== */
+/* ========== Col Props 生成 (プレイの場合) ========== */
+
+const resolveColPropsOnPlay = (index: CardIndex, action: PlayAction) => {
+  return action.target === index
+    ? {
+        content: <CheckCircleOutlined />,
+      }
+    : undefined
+}
+const createColPropsArrayOnPlay = (action: PlayAction): ColPropsArray => {
+  return [
+    resolveColPropsOnPlay(1, action),
+    resolveColPropsOnPlay(2, action),
+    resolveColPropsOnPlay(3, action),
+    resolveColPropsOnPlay(4, action),
+    resolveColPropsOnPlay(5, action),
+  ]
+}
+
+/* ========== Col Props 生成 (捨てるの場合) ========== */
 
 const resolveColPropsOnRemoval = (index: CardIndex, action: RemovalAction) => {
   return action.target === index
@@ -87,6 +107,8 @@ const createColPropsArray = (action: Action): ColPropsArray => {
       return createColPropsArrayOnColor(action)
     case 'number':
       return createColPropsArrayOnNumber(action)
+    case 'play':
+      return createColPropsArrayOnPlay(action)
     case 'removal':
       return createColPropsArrayOnRemoval(action)
   }
