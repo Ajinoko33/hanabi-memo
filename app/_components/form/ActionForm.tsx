@@ -1,7 +1,7 @@
 import { ALL_CARD_INDEX } from '@/constants'
 import z from '@/lib/zod'
 import { Action, CardIndex, KnowledgeAction, RemovalAction } from '@/types'
-import { InfoCircleOutlined, ToTopOutlined } from '@ant-design/icons'
+import { InfoCircleOutlined, StopOutlined } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Segmented } from 'antd'
 import { FC, useState } from 'react'
@@ -176,7 +176,7 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
             {
               label: 'プレイ・捨てる',
               value: 'removal',
-              icon: <ToTopOutlined />,
+              icon: <StopOutlined />,
             },
           ]}
           shape='round'
