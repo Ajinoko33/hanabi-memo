@@ -70,7 +70,7 @@ export default function Home() {
           onClick={open}
         />
         <Modal
-          title='完全に削除しますか？'
+          title='完全に削除しますか？🥺'
           open={isOpen}
           onOk={handleOk}
           onCancel={handleCancel}
