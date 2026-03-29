@@ -91,6 +91,7 @@ const trySet = <Value>(key: LocalStorageKey, value: Value): boolean => {
 export const useLocalStorageSyncState = <Value>(
   key: LocalStorageKey,
   initialState: Value | (() => Value),
+  onFinishInit?: (result: Result<Value>) => void,
 ) => {
   const [value, setValue] = useState(initialState)
 
@@ -99,6 +100,8 @@ export const useLocalStorageSyncState = <Value>(
     if (result.success) {
       setValue(result.value)
     }
+    onFinishInit?.(result)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
