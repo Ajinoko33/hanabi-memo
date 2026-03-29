@@ -185,7 +185,7 @@ export const ActionForm: FC<ActionFormProps> = (props) => {
         />
       </div>
 
-      <div className='relative'>
+      <div>
         <form
           className='flex flex-col space-y-6 items-center'
           onSubmit={onSubmit}
