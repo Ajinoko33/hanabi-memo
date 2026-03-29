@@ -2,8 +2,8 @@ import { Action } from '@/types'
 import { InfoCircleOutlined, StopOutlined } from '@ant-design/icons'
 import { Segmented } from 'antd'
 import { FC, useState } from 'react'
-import { KnowledgeActionForm } from './KnowledgeActionFormContent'
-import { RemovalActionForm } from './RemovalActionFormContent'
+import { KnowledgeActionForm } from './KnowledgeActionForm'
+import { RemovalActionForm } from './RemovalActionForm'
 
 interface ActionFormProps {
   addAction: (action: Action) => void
