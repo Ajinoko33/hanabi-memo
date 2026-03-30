@@ -78,6 +78,10 @@ export default function Home() {
           onOk={handleOk}
           onCancel={handleCancel}
           okText='削除する'
+          okButtonProps={{
+            danger: true,
+            type: 'default',
+          }}
           cancelText='やめとく'
         >
           この操作は取り消せません。
