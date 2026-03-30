@@ -1,16 +1,16 @@
+import { COLORS } from '@/constants'
+import { Color } from '@/types'
 import { Col } from 'antd'
 import clsx from 'clsx'
 import { FC, ReactNode } from 'react'
 
 export interface ActionColProps {
   content?: ReactNode
-  style?: {
-    textColor?: string
-    backgroundColor?: string
-  }
+  textColor?: Color
+  isGrayOut?: boolean
 }
 export const ActionCol: FC<ActionColProps> = (props) => {
-  const { content, style } = props
+  const { content, textColor, isGrayOut } = props
 
   return (
     <Col className='border-b border-l w-1/5'>
@@ -18,8 +18,8 @@ export const ActionCol: FC<ActionColProps> = (props) => {
       <div
         className={clsx(
           'flex justify-center min-h-[1.5em] font-semibold',
-          style?.textColor,
-          style?.backgroundColor,
+          textColor ? COLORS[textColor].style : undefined,
+          isGrayOut ? 'bg-gray-300' : undefined,
         )}
       >
         {content}

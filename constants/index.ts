@@ -19,7 +19,7 @@ export const ALL_CARD_INDEX = Object.keys(CARDS).map(
 export const COLORS = {
   red: { label: 'あか', style: 'text-red-500' },
   blue: { label: 'あお', style: 'text-blue-500' },
-  yellow: { label: 'きいろ', style: 'text-yellow-500' },
+  yellow: { label: 'きいろ', style: 'text-amber-500' },
   green: { label: 'みどり', style: 'text-green-500' },
   white: { label: 'しろ', style: 'text-gray-500' },
 } as const satisfies Record<Color, { label: string; style: string }>
