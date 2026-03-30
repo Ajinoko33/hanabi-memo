@@ -21,9 +21,7 @@ const resolveColPropsOnColor = (index: CardIndex, action: ColorAction) => {
   return action.targets.includes(index)
     ? {
         content: COLORS[action.color].label,
-        style: {
-          textColor: COLORS[action.color].style,
-        },
+        textColor: action.color,
       }
     : undefined
 }
@@ -74,16 +72,9 @@ const createColProps = (
 ): ColProps => {
   const base = createBaseColProps(action, index)
 
-  if (!isStale(action.key, index)) {
-    return base
-  }
-
   return {
     ...base,
-    style: {
-      ...base?.style,
-      backgroundColor: 'bg-gray-300',
-    },
+    isGrayOut: isStale(action.key, index),
   }
 }
 
