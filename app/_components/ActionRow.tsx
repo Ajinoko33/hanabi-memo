@@ -104,7 +104,7 @@ export const ActionRow: FC<ActionRowProps> = (props) => {
   const colPropsArray = createColPropsArray(action, isStale)
 
   return (
-    <Row className='w-full'>
+    <Row className='w-full border-r'>
       {colPropsArray.map((colProps, index) => {
         return (
           <ActionCol
