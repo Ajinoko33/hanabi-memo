@@ -7,7 +7,7 @@ import { Button, Col, Divider, Modal, Row } from 'antd'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 import { useActionLog } from './_hooks/useActionLog'
-import { useCheckIsStale } from './_hooks/useCheckIstale'
+import { useCheckIsStale } from './_hooks/useCheckIsStale'
 
 const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
   (card) => card.label,
