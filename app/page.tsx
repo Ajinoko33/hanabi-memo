@@ -19,22 +19,24 @@ export default function Home() {
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(clear)
 
   return (
-    <main className='flex flex-col items-center flex-1 p-4 bg-white'>
-      <div className='w-96 border-r'>
+    <main className='flex flex-col items-center flex-1 px-4 pb-4 bg-white'>
+      <div className='w-96'>
         {/* title */}
-        <Row className='w-full'>
-          {titles.map((value) => {
-            return (
-              <Col
-                key={value}
-                flex={1}
-                className='border-t border-b-2 border-l'
-              >
-                <div className='flex justify-center'>{value}</div>
-              </Col>
-            )
-          })}
-        </Row>
+        <div className='w-full sticky top-0 pt-4 bg-white z-10'>
+          <Row className='w-full border-r'>
+            {titles.map((value) => {
+              return (
+                <Col
+                  key={value}
+                  flex={1}
+                  className='border-t border-b-2 border-l'
+                >
+                  <div className='flex justify-center'>{value}</div>
+                </Col>
+              )
+            })}
+          </Row>
+        </div>
 
         {/* content */}
         {logs.map((action) => {
