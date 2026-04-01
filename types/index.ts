@@ -1,5 +1,5 @@
 export type Color = 'red' | 'blue' | 'yellow' | 'green' | 'white'
-export type Number = 1 | 2 | 3 | 4 | 5
+export type CardNumber = 1 | 2 | 3 | 4 | 5
 export type CardIndex = 1 | 2 | 3 | 4 | 5
 
 /* ========== Action ========== */
@@ -16,7 +16,7 @@ export interface ColorAction extends BaseKnowledgeAction<'color'> {
   color: Color
 }
 export interface NumberAction extends BaseKnowledgeAction<'number'> {
-  number: Number
+  number: CardNumber
 }
 export interface PlayAction extends BaseAction<'play'> {
   target: CardIndex
