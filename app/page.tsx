@@ -19,10 +19,10 @@ export default function Home() {
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(clear)
 
   return (
-    <main className='flex flex-col items-center flex-1 px-4 pb-4 bg-white'>
+    <main className='flex flex-col items-center flex-1 p-4 bg-white'>
       <div className='w-96'>
         {/* title */}
-        <div className='w-full sticky top-0 pt-4 bg-white z-10'>
+        <div className='w-full sticky top-0 bg-white z-10'>
           <Row className='w-full border-r'>
             {titles.map((value) => {
               return (
