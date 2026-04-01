@@ -2,10 +2,18 @@
 
 import { CARDS } from '@/constants'
 import { useModalManipulation } from '@/hooks/useModalManipulation'
-import { DeleteOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  FormOutlined,
+  LeftOutlined,
+  RightOutlined,
+  TableOutlined,
+} from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
+import { useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
+import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
 import { useCheckIsStale } from './_hooks/useCheckIsStale'
 
@@ -17,6 +25,7 @@ export default function Home() {
   const { logs, add, undo, redo, hasPrev, hasNext, clear } = useActionLog()
   const isStale = useCheckIsStale(logs)
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(clear)
+  const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
 
   return (
     <main className='flex flex-col items-center flex-1 p-4 bg-white'>
@@ -52,11 +61,19 @@ export default function Home() {
 
       <Divider style={{ borderColor: '#ccc' }} />
 
-      <ActionForm addAction={add} />
+      {currentKey === 'form' && <ActionForm addAction={add} />}
+      {currentKey === 'matrix' && <CountMatrix />}
 
       <Divider style={{ borderColor: '#ccc' }} />
 
       <div className='flex space-x-8'>
+        <Button
+          shape='circle'
+          icon={currentKey === 'form' ? <TableOutlined /> : <FormOutlined />}
+          onClick={() =>
+            setCurrentKey((prev) => (prev === 'form' ? 'matrix' : 'form'))
+          }
+        />
         <Button
           shape='circle'
           icon={<LeftOutlined />}
