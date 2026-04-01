@@ -1,4 +1,4 @@
-import type { CardIndex, Color, Number } from '@/types'
+import type { CardIndex, CardNumber, Color } from '@/types'
 
 /* ========== カード ========== */
 
@@ -32,4 +32,4 @@ export const NUMBERS = {
   3: { label: '3' },
   4: { label: '4' },
   5: { label: '5' },
-} as const satisfies Record<Number, { label: string }>
+} as const satisfies Record<CardNumber, { label: string }>
