@@ -1,6 +1,7 @@
-import { Color } from '@/types'
+import { RowValues } from '@/hooks/useCountMatrix'
+import { CardNumber, Color } from '@/types'
 import { FC } from 'react'
-import { ColorRow, RowValues } from './ColorRow'
+import { ColorRow } from './ColorRow'
 
 const colors = [
   'red',
@@ -10,49 +11,13 @@ const colors = [
   'white',
 ] as const satisfies Color[]
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface CountMatrixProps {}
+interface CountMatrixProps {
+  values: Record<Color, RowValues>
+  flip: (color: Color, cardNumber: CardNumber, index: number) => void
+}
 
 export const CountMatrix: FC<CountMatrixProps> = (props) => {
-  const {} = props
-
-  const values: Record<Color, RowValues> = {
-    red: {
-      1: [true, false, false],
-      2: [true, false],
-      3: [false, true],
-      4: [true, true],
-      5: [false],
-    },
-    blue: {
-      1: [true, false, false],
-      2: [true, false],
-      3: [false, true],
-      4: [true, true],
-      5: [false],
-    },
-    yellow: {
-      1: [true, false, false],
-      2: [true, false],
-      3: [false, true],
-      4: [true, true],
-      5: [false],
-    },
-    green: {
-      1: [true, false, false],
-      2: [true, false],
-      3: [false, true],
-      4: [true, true],
-      5: [false],
-    },
-    white: {
-      1: [true, false, false],
-      2: [true, false],
-      3: [false, true],
-      4: [true, true],
-      5: [false],
-    },
-  }
+  const { values, flip } = props
 
   return (
     <div className='w-full'>
@@ -81,6 +46,7 @@ export const CountMatrix: FC<CountMatrixProps> = (props) => {
               key={color}
               color={color}
               values={values[color]}
+              flip={flip}
             />
           )
         })}

@@ -1,25 +1,19 @@
 import { COLORS } from '@/constants'
+import { RowValues } from '@/hooks/useCountMatrix'
 import { CardNumber, Color } from '@/types'
 import { FC, Fragment } from 'react'
 import { Cell } from './Cell'
-
-export type RowValues = {
-  [K in CardNumber]: K extends 1
-    ? [boolean, boolean, boolean]
-    : K extends 5
-      ? [boolean]
-      : [boolean, boolean]
-}
 
 const CardNumbers = [1, 2, 3, 4, 5] satisfies CardNumber[]
 
 interface ColorRowProps {
   color: Color
   values: RowValues
+  flip: (color: Color, cardNumber: CardNumber, index: number) => void
 }
 
 export const ColorRow: FC<ColorRowProps> = (props) => {
-  const { color, values } = props
+  const { color, values, flip } = props
 
   return (
     <>
@@ -30,9 +24,22 @@ export const ColorRow: FC<ColorRowProps> = (props) => {
         const [v1, v2, v3] = values[number]
         return (
           <Fragment key={number}>
-            <Cell checked={v1} />
-            {v2 !== undefined && <Cell checked={v2} />}
-            {v3 !== undefined && <Cell checked={v3} />}
+            <Cell
+              onChange={() => flip(color, number, 0)}
+              checked={v1}
+            />
+            {v2 !== undefined && (
+              <Cell
+                onChange={() => flip(color, number, 1)}
+                checked={v2}
+              />
+            )}
+            {v3 !== undefined && (
+              <Cell
+                onChange={() => flip(color, number, 2)}
+                checked={v3}
+              />
+            )}
           </Fragment>
         )
       })}
