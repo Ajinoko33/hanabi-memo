@@ -40,5 +40,9 @@ export const useCountMatrix = () => {
     [],
   )
 
-  return [values, flip] as const
+  const clear = useCallback(() => {
+    setValues(defaultValues)
+  }, [])
+
+  return { values, flip, clear } as const
 }
