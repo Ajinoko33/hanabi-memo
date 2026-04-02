@@ -1,6 +1,7 @@
 'use client'
 
 import { CARDS } from '@/constants'
+import { useCountMatrix } from '@/hooks/useCountMatrix'
 import { useModalManipulation } from '@/hooks/useModalManipulation'
 import {
   DeleteOutlined,
@@ -16,7 +17,6 @@ import { ActionForm } from './_components/form/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
 import { useCheckIsStale } from './_hooks/useCheckIsStale'
-import { useCountMatrix } from '@/hooks/useCountMatrix'
 
 const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
   (card) => card.label,
@@ -64,13 +64,19 @@ export default function Home() {
       <Divider style={{ borderColor: '#ccc' }} />
 
       {currentKey === 'form' && <ActionForm addAction={add} />}
-      {currentKey === 'matrix' && <CountMatrix values={values} flip={flip}/>}
+      {currentKey === 'matrix' && (
+        <CountMatrix
+          values={values}
+          flip={flip}
+        />
+      )}
 
       <Divider style={{ borderColor: '#ccc' }} />
 
       <div className='flex space-x-8'>
         <Button
           shape='circle'
+          size='large'
           icon={currentKey === 'form' ? <TableOutlined /> : <FormOutlined />}
           onClick={() =>
             setCurrentKey((prev) => (prev === 'form' ? 'matrix' : 'form'))
@@ -78,18 +84,21 @@ export default function Home() {
         />
         <Button
           shape='circle'
+          size='large'
           icon={<LeftOutlined />}
           onClick={undo}
           disabled={!hasPrev}
         />
         <Button
           shape='circle'
+          size='large'
           icon={<RightOutlined />}
           onClick={redo}
           disabled={!hasNext}
         />
         <Button
           shape='circle'
+          size='large'
           icon={<DeleteOutlined style={{ color: 'red' }} />}
           onClick={open}
         />
