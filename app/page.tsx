@@ -11,7 +11,7 @@ import {
   TableOutlined,
 } from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
@@ -23,11 +23,25 @@ const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
 )
 
 export default function Home() {
-  const { logs, add, undo, redo, hasPrev, hasNext, clear } = useActionLog()
+  const {
+    logs,
+    add,
+    undo,
+    redo,
+    hasPrev,
+    hasNext,
+    clear: clearLog,
+  } = useActionLog()
   const isStale = useCheckIsStale(logs)
-  const { isOpen, open, handleOk, handleCancel } = useModalManipulation(clear)
   const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
-  const [values, flip] = useCountMatrix()
+  const { values, flip, clear: clearMatrix } = useCountMatrix()
+
+  const onOk = useCallback(() => {
+    clearLog()
+    clearMatrix()
+  }, [clearLog, clearMatrix])
+
+  const { isOpen, open, handleOk, handleCancel } = useModalManipulation(onOk)
 
   return (
     <main className='flex flex-col items-center flex-1 p-4 bg-white'>
