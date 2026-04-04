@@ -1,6 +1,6 @@
 {
   "name": "花火メモ",
-  "start_url": "/hanabi-memo",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "orientation": "portrait-primary",
