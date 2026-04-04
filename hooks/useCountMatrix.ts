@@ -1,5 +1,6 @@
 import { CardNumber, Color } from '@/types'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
+import { useLocalStorageSyncState } from './useLocalStorageSyncState'
 
 export type RowValues = {
   [K in CardNumber]: K extends 1
@@ -25,7 +26,9 @@ const defaultValues: Record<Color, RowValues> = {
 }
 
 export const useCountMatrix = () => {
-  const [values, setValues] = useState<Record<Color, RowValues>>(defaultValues)
+  const [values, setValues] = useLocalStorageSyncState<
+    Record<Color, RowValues>
+  >('countMatrix', defaultValues)
 
   const flip = useCallback(
     (color: Color, cardNumber: CardNumber, index: number) => {
@@ -37,12 +40,12 @@ export const useCountMatrix = () => {
         return newValues
       })
     },
-    [],
+    [setValues],
   )
 
   const clear = useCallback(() => {
     setValues(defaultValues)
-  }, [])
+  }, [setValues])
 
   return { values, flip, clear } as const
 }
