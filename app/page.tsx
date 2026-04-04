@@ -44,7 +44,7 @@ export default function Home() {
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(onOk)
 
   return (
-    <main className='flex flex-col items-center flex-1 p-4 bg-white'>
+    <main className='flex flex-col items-center flex-1 pt-4 pl-4 pr-4 pb-8 bg-white'>
       <div className='w-96'>
         {/* title */}
         <div className='w-full sticky top-0 bg-white z-10'>

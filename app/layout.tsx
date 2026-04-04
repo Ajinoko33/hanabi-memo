@@ -1,3 +1,5 @@
+import { SafeAreaBottom } from '@/components/app/SafeAreaBottom'
+import { SafeAreaTop } from '@/components/app/SafeAreaTop'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
@@ -29,7 +31,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className='min-h-full flex flex-col'>
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry>
+          <SafeAreaTop />
+          {children}
+          <SafeAreaBottom />
+        </AntdRegistry>
       </body>
     </html>
   )
