@@ -11,7 +11,7 @@ import {
   TableOutlined,
 } from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
@@ -34,7 +34,7 @@ export default function Home() {
   } = useActionLog()
   const isStale = useCheckIsStale(logs)
   const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
-  const { values, flip, clear: clearMatrix } = useCountMatrix()
+  const { values, forward, clear: clearMatrix } = useCountMatrix()
 
   const onOk = useCallback(() => {
     clearLog()
@@ -43,8 +43,13 @@ export default function Home() {
 
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(onOk)
 
+  useEffect(() => {
+    // 旧keyに基づくデータを削除
+    localStorage.removeItem('countMatrix')
+  }, [])
+
   return (
-    <main className='flex flex-col items-center flex-1 p-4 bg-white'>
+    <main className='flex flex-col items-center flex-1 pt-4 pl-4 pr-4 pb-8 bg-white'>
       <div className='w-96'>
         {/* title */}
         <div className='w-full sticky top-0 bg-white z-10'>
@@ -81,7 +86,7 @@ export default function Home() {
       {currentKey === 'matrix' && (
         <CountMatrix
           values={values}
-          flip={flip}
+          forward={forward}
         />
       )}
 

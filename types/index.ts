@@ -30,4 +30,4 @@ export type Action = KnowledgeAction | PlayAction | RemovalAction
 
 /* ========== Local Storage Key ========== */
 
-export type LocalStorageKey = 'input-logs'
+export type LocalStorageKey = 'input-logs' | 'countMatrix-v2'
