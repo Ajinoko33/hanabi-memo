@@ -9,11 +9,11 @@ const CardNumbers = [1, 2, 3, 4, 5] satisfies CardNumber[]
 interface ColorRowProps {
   color: Color
   values: RowValues
-  flip: (color: Color, cardNumber: CardNumber, index: number) => void
+  forward: (color: Color, cardNumber: CardNumber, index: number) => void
 }
 
 export const ColorRow: FC<ColorRowProps> = (props) => {
-  const { color, values, flip } = props
+  const { color, values, forward } = props
 
   return (
     <>
@@ -25,19 +25,19 @@ export const ColorRow: FC<ColorRowProps> = (props) => {
         return (
           <Fragment key={number}>
             <Cell
-              onChange={() => flip(color, number, 0)}
-              checked={v1}
+              onClick={() => forward(color, number, 0)}
+              value={v1}
             />
             {v2 !== undefined && (
               <Cell
-                onChange={() => flip(color, number, 1)}
-                checked={v2}
+                onClick={() => forward(color, number, 1)}
+                value={v2}
               />
             )}
             {v3 !== undefined && (
               <Cell
-                onChange={() => flip(color, number, 2)}
-                checked={v3}
+                onClick={() => forward(color, number, 2)}
+                value={v3}
               />
             )}
           </Fragment>

@@ -34,7 +34,7 @@ export default function Home() {
   } = useActionLog()
   const isStale = useCheckIsStale(logs)
   const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
-  const { values, flip, clear: clearMatrix } = useCountMatrix()
+  const { values, forward, clear: clearMatrix } = useCountMatrix()
 
   const onOk = useCallback(() => {
     clearLog()
@@ -81,7 +81,7 @@ export default function Home() {
       {currentKey === 'matrix' && (
         <CountMatrix
           values={values}
-          flip={flip}
+          forward={forward}
         />
       )}
 

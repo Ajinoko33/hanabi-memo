@@ -13,11 +13,11 @@ const colors = [
 
 interface CountMatrixProps {
   values: Record<Color, RowValues>
-  flip: (color: Color, cardNumber: CardNumber, index: number) => void
+  forward: (color: Color, cardNumber: CardNumber, index: number) => void
 }
 
 export const CountMatrix: FC<CountMatrixProps> = (props) => {
-  const { values, flip } = props
+  const { values, forward } = props
 
   return (
     <div className='w-full'>
@@ -46,7 +46,7 @@ export const CountMatrix: FC<CountMatrixProps> = (props) => {
               key={color}
               color={color}
               values={values[color]}
-              flip={flip}
+              forward={forward}
             />
           )
         })}
