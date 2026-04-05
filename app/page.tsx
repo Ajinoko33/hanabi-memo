@@ -11,7 +11,7 @@ import {
   TableOutlined,
 } from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { ActionForm } from './_components/form/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
@@ -42,6 +42,11 @@ export default function Home() {
   }, [clearLog, clearMatrix])
 
   const { isOpen, open, handleOk, handleCancel } = useModalManipulation(onOk)
+
+  useEffect(() => {
+    // 旧keyに基づくデータを削除
+    localStorage.removeItem('countMatrix')
+  }, [])
 
   return (
     <main className='flex flex-col items-center flex-1 pt-4 pl-4 pr-4 pb-8 bg-white'>

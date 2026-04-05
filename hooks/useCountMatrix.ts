@@ -30,7 +30,7 @@ const defaultValues: Record<Color, RowValues> = {
 export const useCountMatrix = () => {
   const [values, setValues] = useLocalStorageSyncState<
     Record<Color, RowValues>
-  >('countMatrix', defaultValues)
+  >('countMatrix-v2', defaultValues)
 
   const forward = useCallback(
     (color: Color, cardNumber: CardNumber, index: number) => {
