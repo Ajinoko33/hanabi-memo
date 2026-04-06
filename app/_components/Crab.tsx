@@ -1,7 +1,14 @@
 import clsx from 'clsx'
 import { FC } from 'react'
 
-type CrabType = 'to-right-1' | 'to-right-2' | 'to-right-3' | 'to-left-1'
+const animationClasses = {
+  'to-right-1': 'animate-slide-to-right-1',
+  'to-right-2': 'animate-slide-to-right-2',
+  'to-right-3': 'animate-slide-to-right-3',
+  'to-left-1': 'animate-slide-to-left-1',
+} as const
+
+type CrabType = keyof typeof animationClasses
 
 interface CrabProps {
   type: CrabType
@@ -14,7 +21,7 @@ export const Crab: FC<CrabProps> = (props) => {
     <div
       className={clsx(
         'absolute top-1 left-0 inline-block',
-        `animate-slide-${type}`,
+        animationClasses[type],
       )}
     >
       🦀
