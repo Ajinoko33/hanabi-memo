@@ -13,6 +13,7 @@ import {
 import { Button, Col, Divider, Modal, Row } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
 import { ActionRow } from './_components/ActionRow'
+import { Crab } from './_components/Crab'
 import { ActionForm } from './_components/form/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
@@ -90,7 +91,13 @@ export default function Home() {
         />
       )}
 
-      <Divider style={{ borderColor: '#ccc' }} />
+      <div className='w-full overflow-hidden relative'>
+        <Divider style={{ borderColor: '#ccc' }} />
+        <Crab type='to-right-1' />
+        <Crab type='to-right-2' />
+        <Crab type='to-right-3' />
+        <Crab type='to-left-1' />
+      </div>
 
       <div className='flex space-x-8'>
         <Button
