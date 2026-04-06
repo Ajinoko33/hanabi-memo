@@ -10,6 +10,47 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --animate-slide-to-right-1: slide-to-right-1 25s linear infinite backwards;
+  --animate-slide-to-right-2: slide-to-right-2 60s linear infinite backwards;
+  --animate-slide-to-right-3: slide-to-right-3 60s linear infinite backwards;
+  --animate-slide-to-left-1: slide-to-left-1 35s linear infinite backwards;
+}
+
+@keyframes slide-to-right-1 {
+  0%, 35% {
+    transform: translateX(-32px)
+  }
+  100% {
+    transform: translateX(100vw)
+  }
+}
+
+@keyframes slide-to-right-2 {
+  0%, 40% {
+    transform: translateX(-32px)
+  }
+  88%, 100% {
+    transform: translateX(100vw)
+  }
+}
+
+@keyframes slide-to-right-3 {
+  0%, 42% {
+    transform: translateX(-32px)
+  }
+  90%, 100% {
+    transform: translateX(100vw)
+  }
+}
+
+@keyframes slide-to-left-1 {
+  0%, 30% {
+    transform: translateX(100vw)
+  }
+  100% {
+    transform: translateX(-32px)
+  }
 }
 
 body {
