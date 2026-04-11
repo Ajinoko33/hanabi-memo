@@ -162,7 +162,7 @@ export const KnowledgeActionForm: FC<KnowledgeActionFormProps> = (props) => {
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
               >
-                <div className='flex'>
+                <div className='flex justify-center'>
                   <Radio.Button value='number-1'>
                     {NUMBERS[1].label}
                   </Radio.Button>
@@ -179,7 +179,7 @@ export const KnowledgeActionForm: FC<KnowledgeActionFormProps> = (props) => {
                     {NUMBERS[5].label}
                   </Radio.Button>
                 </div>
-                <div className='flex'>
+                <div className='flex justify-center'>
                   <Radio.Button value='color-red'>
                     <div className={clsx('font-semibold', COLORS.red.style)}>
                       {COLORS.red.label}
