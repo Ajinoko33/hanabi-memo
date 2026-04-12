@@ -11,13 +11,14 @@ import {
   TableOutlined,
 } from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { Crab } from './_components/Crab'
 import { ActionForm } from './_components/form-v1/ActionForm'
 import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
 import { useCheckIsStale } from './_hooks/useCheckIsStale'
+import { usePanelMode } from './_hooks/usePanelMode'
 
 const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
   (card) => card.label,
@@ -34,7 +35,7 @@ export default function Home() {
     clear: clearLog,
   } = useActionLog()
   const isStale = useCheckIsStale(logs)
-  const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
+  const { currentMode, toggleMode, formVersion } = usePanelMode()
   const { values, forward, clear: clearMatrix } = useCountMatrix()
 
   const onOk = useCallback(() => {
@@ -78,8 +79,10 @@ export default function Home() {
 
       <Divider style={{ borderColor: '#ccc' }} />
 
-      {currentKey === 'form' && <ActionForm addAction={add} />}
-      {currentKey === 'matrix' && (
+      {currentMode === 'form' && formVersion === '1' && (
+        <ActionForm addAction={add} />
+      )}
+      {currentMode === 'matrix' && (
         <CountMatrix
           values={values}
           forward={forward}
@@ -98,10 +101,8 @@ export default function Home() {
         <Button
           shape='circle'
           size='large'
-          icon={currentKey === 'form' ? <TableOutlined /> : <FormOutlined />}
-          onClick={() =>
-            setCurrentKey((prev) => (prev === 'form' ? 'matrix' : 'form'))
-          }
+          icon={currentMode === 'form' ? <TableOutlined /> : <FormOutlined />}
+          onClick={toggleMode}
         />
         <Button
           shape='circle'
