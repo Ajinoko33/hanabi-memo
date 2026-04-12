@@ -80,7 +80,9 @@ export default function Home() {
         })}
       </div>
 
-      <Divider style={{ borderColor: '#ccc' }} />
+      {!(currentMode === 'form' && formVersion === '2') && (
+        <Divider style={{ borderColor: '#ccc' }} />
+      )}
 
       {currentMode === 'form' && formVersion === '1' && (
         <ActionForm addAction={add} />
