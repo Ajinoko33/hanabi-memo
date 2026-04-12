@@ -3,11 +3,11 @@ import type { CardIndex, CardNumber, Color } from '@/types'
 /* ========== カード ========== */
 
 export const CARDS = {
-  1: { label: '①' },
-  2: { label: '②' },
-  3: { label: '③' },
-  4: { label: '④' },
-  5: { label: '⑤' },
+  1: { label: 'A' },
+  2: { label: 'B' },
+  3: { label: 'C' },
+  4: { label: 'D' },
+  5: { label: 'E' },
 } as const satisfies Record<CardIndex, { label: string }>
 
 export const ALL_CARD_INDEX = Object.keys(CARDS).map(
