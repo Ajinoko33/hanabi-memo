@@ -5,6 +5,7 @@ import { useCountMatrix } from '@/hooks/useCountMatrix'
 import { useModalManipulation } from '@/hooks/useModalManipulation'
 import {
   DeleteOutlined,
+  FileSyncOutlined,
   FormOutlined,
   LeftOutlined,
   RightOutlined,
@@ -15,6 +16,7 @@ import { useCallback } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { Crab } from './_components/Crab'
 import { ActionForm } from './_components/form-v1/ActionForm'
+import { ActionFormV2 } from './_components/form-v2/ActionFormV2'
 import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
 import { useCheckIsStale } from './_hooks/useCheckIsStale'
@@ -35,7 +37,8 @@ export default function Home() {
     clear: clearLog,
   } = useActionLog()
   const isStale = useCheckIsStale(logs)
-  const { currentMode, toggleMode, formVersion } = usePanelMode()
+  const { currentMode, toggleMode, formVersion, toggleFormVersion } =
+    usePanelMode()
   const { values, forward, clear: clearMatrix } = useCountMatrix()
 
   const onOk = useCallback(() => {
@@ -82,6 +85,7 @@ export default function Home() {
       {currentMode === 'form' && formVersion === '1' && (
         <ActionForm addAction={add} />
       )}
+      {currentMode === 'form' && formVersion === '2' && <ActionFormV2 />}
       {currentMode === 'matrix' && (
         <CountMatrix
           values={values}
@@ -123,6 +127,12 @@ export default function Home() {
           size='large'
           icon={<DeleteOutlined style={{ color: 'red' }} />}
           onClick={open}
+        />
+        <Button
+          shape='circle'
+          size='large'
+          icon={<FileSyncOutlined style={{ color: 'blue' }} />}
+          onClick={toggleFormVersion}
         />
         <Modal
           title='完全に削除しますか？🥺'

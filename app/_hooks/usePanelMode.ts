@@ -16,9 +16,19 @@ export const usePanelMode = () => {
     })
   }, [])
 
+  const toggleFormVersion = useCallback(() => {
+    setFormVersion((prev) => {
+      if (prev === '1') {
+        return '2'
+      }
+      return '1'
+    })
+  }, [])
+
   return {
     currentMode,
     toggleMode,
     formVersion,
+    toggleFormVersion,
   } as const
 }
