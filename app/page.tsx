@@ -5,19 +5,22 @@ import { useCountMatrix } from '@/hooks/useCountMatrix'
 import { useModalManipulation } from '@/hooks/useModalManipulation'
 import {
   DeleteOutlined,
+  FileSyncOutlined,
   FormOutlined,
   LeftOutlined,
   RightOutlined,
   TableOutlined,
 } from '@ant-design/icons'
 import { Button, Col, Divider, Modal, Row } from 'antd'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { ActionRow } from './_components/ActionRow'
 import { Crab } from './_components/Crab'
-import { ActionForm } from './_components/form/ActionForm'
+import { ActionForm } from './_components/form-v1/ActionForm'
+import { ActionFormV2 } from './_components/form-v2/ActionFormV2'
 import { CountMatrix } from './_components/matrix/CountMatrix'
 import { useActionLog } from './_hooks/useActionLog'
 import { useCheckIsStale } from './_hooks/useCheckIsStale'
+import { usePanelMode } from './_hooks/usePanelMode'
 
 const titles = [CARDS[1], CARDS[2], CARDS[3], CARDS[4], CARDS[5]].map(
   (card) => card.label,
@@ -34,7 +37,8 @@ export default function Home() {
     clear: clearLog,
   } = useActionLog()
   const isStale = useCheckIsStale(logs)
-  const [currentKey, setCurrentKey] = useState<'form' | 'matrix'>('form')
+  const { currentMode, toggleMode, formVersion, toggleFormVersion } =
+    usePanelMode()
   const { values, forward, clear: clearMatrix } = useCountMatrix()
 
   const onOk = useCallback(() => {
@@ -76,10 +80,17 @@ export default function Home() {
         })}
       </div>
 
-      <Divider style={{ borderColor: '#ccc' }} />
+      {!(currentMode === 'form' && formVersion === '2') && (
+        <Divider style={{ borderColor: '#ccc' }} />
+      )}
 
-      {currentKey === 'form' && <ActionForm addAction={add} />}
-      {currentKey === 'matrix' && (
+      {currentMode === 'form' && formVersion === '1' && (
+        <ActionForm addAction={add} />
+      )}
+      {currentMode === 'form' && formVersion === '2' && (
+        <ActionFormV2 addAction={add} />
+      )}
+      {currentMode === 'matrix' && (
         <CountMatrix
           values={values}
           forward={forward}
@@ -98,10 +109,8 @@ export default function Home() {
         <Button
           shape='circle'
           size='large'
-          icon={currentKey === 'form' ? <TableOutlined /> : <FormOutlined />}
-          onClick={() =>
-            setCurrentKey((prev) => (prev === 'form' ? 'matrix' : 'form'))
-          }
+          icon={currentMode === 'form' ? <TableOutlined /> : <FormOutlined />}
+          onClick={toggleMode}
         />
         <Button
           shape='circle'
@@ -122,6 +131,12 @@ export default function Home() {
           size='large'
           icon={<DeleteOutlined style={{ color: 'red' }} />}
           onClick={open}
+        />
+        <Button
+          shape='circle'
+          size='large'
+          icon={<FileSyncOutlined style={{ color: 'blue' }} />}
+          onClick={toggleFormVersion}
         />
         <Modal
           title='完全に削除しますか？🥺'
