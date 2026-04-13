@@ -87,7 +87,9 @@ export default function Home() {
       {currentMode === 'form' && formVersion === '1' && (
         <ActionForm addAction={add} />
       )}
-      {currentMode === 'form' && formVersion === '2' && <ActionFormV2 />}
+      {currentMode === 'form' && formVersion === '2' && (
+        <ActionFormV2 addAction={add} />
+      )}
       {currentMode === 'matrix' && (
         <CountMatrix
           values={values}
