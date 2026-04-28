@@ -3,7 +3,7 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
-  "orientation": "portrait-primary",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
